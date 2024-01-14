@@ -7,8 +7,7 @@ def run():
 
 def solve(path):
     santa = True
-    santa_houses = {(0, 0): 1}
-    robot_houses = {(0, 0): 1}
+    houses = [(0, 0)]
 
     sx, sy = 0, 0
     rx, ry = 0, 0
@@ -23,10 +22,7 @@ def solve(path):
                 sy -= 1
             elif c == '<':
                 sx -= 1
-            if (sx, sy) in santa_houses.keys():
-                santa_houses[(sx, sy)] += 1
-            else:
-                santa_houses[(sx, sy)] = 1
+            houses.append((sx, sy))
         else:
             if c == '^':
                 ry += 1
@@ -36,12 +32,9 @@ def solve(path):
                 ry -= 1
             elif c == '<':
                 rx -= 1
-            if (rx, ry) in robot_houses.keys():
-                robot_houses[(rx, ry)] += 1
-            else:
-                robot_houses[(rx, ry)] = 1
+            houses.append((rx, ry))
 
-    return len([h for h in santa_houses.values() if h >= 1]) + len([h for h in robot_houses.values() if h >= 1]) - 1
+    return len(set(houses))
 
 
 if __name__ == '__main__':
