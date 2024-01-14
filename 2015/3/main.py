@@ -6,22 +6,42 @@ def run():
 
 
 def solve(path):
-    houses = {(0, 0): 1}
-    x, y = 0, 0
+    santa = True
+    santa_houses = {(0, 0): 1}
+    robot_houses = {(0, 0): 1}
+
+    sx, sy = 0, 0
+    rx, ry = 0, 0
     for c in path:
-        if c == '^':
-            y += 1
-        elif c == '>':
-            x += 1
-        elif c == 'v':
-            y -= 1
-        elif c == '<':
-            x -= 1
-        if (x, y) in houses.keys():
-            houses[(x, y)] += 1
+        santa = not santa
+        if santa:
+            if c == '^':
+                sy += 1
+            elif c == '>':
+                sx += 1
+            elif c == 'v':
+                sy -= 1
+            elif c == '<':
+                sx -= 1
+            if (sx, sy) in santa_houses.keys():
+                santa_houses[(sx, sy)] += 1
+            else:
+                santa_houses[(sx, sy)] = 1
         else:
-            houses[(x, y)] = 1
-    return len([h for h in houses.values() if h >= 1])
+            if c == '^':
+                ry += 1
+            elif c == '>':
+                rx += 1
+            elif c == 'v':
+                ry -= 1
+            elif c == '<':
+                rx -= 1
+            if (rx, ry) in robot_houses.keys():
+                robot_houses[(rx, ry)] += 1
+            else:
+                robot_houses[(rx, ry)] = 1
+
+    return len([h for h in santa_houses.values() if h >= 1]) + len([h for h in robot_houses.values() if h >= 1]) - 1
 
 
 if __name__ == '__main__':
